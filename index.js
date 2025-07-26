@@ -8,46 +8,18 @@ import chalkAnimation from 'chalk-animation';
 import boxen from 'boxen';
 import gradient from 'tinygradient';
 
+import { readFileSync } from 'fs';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
+
 // Helper pour créer des liens cliquables dans le terminal
 const link = (text, url) => `\u001B]8;;${url}\u0007${text}\u001B]8;;\u0007`;
 
-// --- Les données du portfolio ---
-const portfolioData = {
-  name: 'Kimku ETOUH',
-  title: 'Développeur Web Fullstack & Mobile',
-  location: 'Afrique de l’Ouest',
-  skills: {
-    'Frontend': ['HTML', 'CSS', 'Tailwind CSS', 'JavaScript', 'React', 'Next.js'],
-    'Backend': ['Node.js', 'Django', 'PostgreSQL'],
-    'Mobile': ['Flutter', 'Dart'],
-    'DevOps': ['Docker', 'Git'],
-  },
-  contact: {
-    email: 'kimku679@gmail.com',
-    github: 'https://github.com/kimku003',
-  },
-  languages: [
-    'Français (Langue maternelle)',
-    'Anglais (Compétence professionnelle)',
-  ],
-  achievements: [
-    "Création d'une application de messagerie web et mobile en temps réel.",
-    "Développement de sites E-commerce performants avec Django et Next.js.",
-    "Mise en place de blogs dynamiques sous Django et WordPress.",
-  ],
-  projects: [
-    "Application de messagerie privée (Web & Mobile)",
-    "Sites E-commerce (Django, Bootstrap, WordPress)",
-    "Réseau social complet (Django)",
-    "Client de messagerie privée (Flet - Python)",
-    "Application de chat (Flutter & Dart)",
-    "Application de gestion de projets (Next.js + React)",
-    "Plateforme IA d'exercices pour l'entraînement (React)",
-    "Application web de création de livres numériques (IA, Next.js)",
-    "Assistant juridique basé sur l'IA (Next.js + React)",
-  ],
-  quote: "La seule façon de faire du bon travail est d'aimer ce que vous faites.",
-};
+// --- Chargement des données du portfolio depuis le fichier JSON ---
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const portfolioData = JSON.parse(readFileSync(join(__dirname, 'portfolio.json'), 'utf-8'));
+
 
 // --- Fonction pour afficher le portfolio ---
 function displayPortfolio(data) {
