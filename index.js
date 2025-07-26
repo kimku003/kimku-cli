@@ -7,13 +7,15 @@ import { hideBin } from 'yargs/helpers';
 import chalkAnimation from 'chalk-animation';
 import boxen from 'boxen';
 import gradient from 'tinygradient';
-
+import open from 'open';
 import { readFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 // Helper pour créer des liens cliquables dans le terminal
-const link = (text, url) => `\u001B]8;;${url}\u0007${text}\u001B]8;;\u0007`;
+const link = (text, url) => `
+]8;;${url}${text}
+]8;;`;
 
 // --- Chargement des données du portfolio depuis le fichier JSON ---
 const __filename = fileURLToPath(import.meta.url);
@@ -84,7 +86,7 @@ function displayPortfolio(data) {
         titleAlignment: 'center',
     }));
 
-  }, 1500); // Réduit à 1.5s pour plus de dynamisme
+  }, 1500);
 }
 
 // --- Gestion des commandes CLI avec yargs ---
@@ -95,6 +97,12 @@ const argv = yargs(hideBin(process.argv))
     type: 'boolean',
     description: 'Affiche le portfolio au format JSON.',
   })
+  .option('open', {
+    alias: 'o',
+    type: 'string',
+    description: "Ouvre une ressource. Options: 'github', 'email'",
+    choices: ['github', 'email']
+  })
   .help('h')
   .alias('h', 'help')
   .version('1.0.0')
@@ -102,7 +110,15 @@ const argv = yargs(hideBin(process.argv))
   .argv;
 
 // --- Logique principale ---
-if (argv.json) {
+if (argv.open) {
+  if (argv.open === 'github') {
+    console.log(chalk.green('Ouverture de GitHub...'));
+    open(portfolioData.contact.github);
+  } else if (argv.open === 'email') {
+    console.log(chalk.green('Ouverture du client de messagerie...'));
+    open(`mailto:${portfolioData.contact.email}`);
+  }
+} else if (argv.json) {
   console.log(JSON.stringify(portfolioData, null, 2));
 } else {
   displayPortfolio(portfolioData);
