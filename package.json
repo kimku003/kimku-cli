@@ -1,0 +1,26 @@
+{
+  "name": "kimku-cli",
+  "version": "1.0.0",
+  "description": "Le portfolio de Kimku, accessible depuis votre terminal.",
+  "main": "index.js",
+  "type": "module",
+  "bin": {
+    "kimku": "./index.js"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "cli",
+    "kimku",
+    "portfolio",
+    "node"
+  ],
+  "author": "Kimku",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "figlet": "^1.7.0",
+    "yargs": "^17.7.2"
+  }
+}
